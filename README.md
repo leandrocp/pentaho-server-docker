@@ -19,3 +19,7 @@ docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=passwo
 ``` 
 docker run --name pentaho --link postgres:database -e DB_USER=postgres -e DB_PASS=password -d leandrocp/pentaho-server
 ```
+
+## License
+
+[MIT Licensed](https://github.com/leandrocp/pentaho-server-docker/blob/master/LICENSE.md).
