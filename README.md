@@ -6,19 +6,25 @@ Easy-to-Use business intelligence (BI) for all
 
 ![logo](http://community.pentaho.com/img/logo-pentaho.svg)
 
-# How to use this image
+## How to use this image
 
-## Start a PostgreSQL instance
+### Start a PostgreSQL instance
 
 ``` 
 docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -d postgres
 ```
 
-## Start Pentaho BI Server
+### Start Pentaho BI Server
 
 ``` 
 docker run --name pentaho --link postgres:database -e DB_USER=postgres -e DB_PASS=password -d leandrocp/pentaho-server
 ```
+
+## TODO
+
+* Param ENV TIMEZONE 
+* Param ENV LOCALE
+* Param database user & password on conf files
 
 ## License
 
