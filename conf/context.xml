@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/pentaho" docbase="webapps/pentaho/">
+  <Resource
+    validationQuery="select 1"
+    url="jdbc:postgresql://database:5432/hibernate"
+    driverClassName="org.postgresql.Driver"
+    password="password"
+    username="hibuser"
+    maxWait="10000"
+    maxIdle="5"
+    maxActive="20"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+    type="javax.sql.DataSource"
+    auth="Container"
+    name="jdbc/Hibernate"/>
+
+  <Resource validationQuery="select 1"
+    url="jdbc:postgresql://database:5432/hibernate"
+    driverClassName="org.postgresql.Driver"
+    password="password"
+    username="hibuser"
+    maxWait="10000"
+    maxIdle="5"
+    maxActive="20"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+    type="javax.sql.DataSource"
+    auth="Container"
+    name="jdbc/Audit"/>
+
+  <Resource validationQuery="select 1"
+    url="jdbc:postgresql://database:5432/quartz"
+    driverClassName="org.postgresql.Driver"
+    password="password"
+    username="pentaho_user"
+    maxWait="10000"
+    maxIdle="5"
+    maxActive="20"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+    type="javax.sql.DataSource"
+    auth="Container"
+    name="jdbc/Quartz"/>
+
+  <Resource validationQuery="select 1"
+    url="jdbc:postgresql://database:5432/hibernate"
+    driverClassName="org.postgresql.Driver"
+    password="password"
+    username="hibuser"
+    maxWait="10000"
+    maxIdle="5"
+    maxActive="20"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+    type="javax.sql.DataSource"
+    auth="Container"
+    name="jdbc/pentaho_operations_mart"/>
+
+  <Resource validationQuery="select 1"
+    url="jdbc:postgresql://database:5432/hibernate"
+    driverClassName="org.postgresql.Driver"
+    password="password"
+    username="hibuser"
+    maxWait="10000"
+    maxIdle="5"
+    maxActive="20"
+    factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+    type="javax.sql.DataSource"
+    auth="Container"
+    name="jdbc/PDI_Operations_Mart"/>
+</Context>
