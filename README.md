@@ -11,15 +11,23 @@ Easy-to-Use business intelligence (BI) for all
 ### Start a PostgreSQL instance
 
 ``` 
-docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=password -d postgres
+docker run --name postgres \
+-e POSTGRES_USER=postgres \
+-e POSTGRES_PASSWORD=password \
+-d postgres
 ```
 
 ### Start Pentaho BI Server
 
 ``` 
-docker run --name pentaho --link postgres:database -e DB_USER=postgres -e DB_PASS=password -d leandrocp/pentaho-server
+docker run --name pentaho \
+--link postgres:database \
+-e TIMEZONE="America/Sao_Paulo" \
+-e LOCALE="pt_BR" \
+-e DB_USER=postgres \
+-e DB_PASS=password \
+-d leandrocp/pentaho-server
 ```
-
 ## TODO
 
 * Param ENV TIMEZONE 
