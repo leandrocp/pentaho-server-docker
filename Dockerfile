@@ -30,8 +30,7 @@ RUN echo  > /etc/timezone && \
 ENV LANGUAGE $LOCALE.UTF-8
 ENV LANG $LOCALE.UTF-8
 
-#RUN /usr/bin/wget -nv  http://softlayer-dal.dl.sourceforge.net/project/pentaho/Business%20Intelligence%20Server/${BISERVER_VERSION}/biserver-ce-${BISERVER_TAG}.zip -O /tmp/biserver-ce-${BISERVER_TAG}.zip 
-COPY biserver-ce-${BISERVER_TAG}.zip /tmp/biserver-ce-${BISERVER_TAG}.zip 
+RUN /usr/bin/wget -nv  http://softlayer-dal.dl.sourceforge.net/project/pentaho/Business%20Intelligence%20Server/${BISERVER_VERSION}/biserver-ce-${BISERVER_TAG}.zip -O /tmp/biserver-ce-${BISERVER_TAG}.zip 
 
 RUN /usr/bin/unzip -q /tmp/biserver-ce-${BISERVER_TAG}.zip -d $PENTAHO_HOME && \
     rm -f $PENTAHO_HOME/biserver-ce/promptuser.sh && \
