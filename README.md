@@ -37,6 +37,12 @@ Open [http://dockerhost:8080/](http://dockerhost:8080/) and fill credentials:
 * User Name: admin
 * Password: password
 
+### Deploy on [Tutum](http://tutum.com)
+
+See [tutum.yml](https://github.com/leandrocp/pentaho-server-docker/blob/master/tutum.yml)
+
+[![Deploy to Tutum](https://s.tutum.co/deploy-to-tutum.svg)](https://dashboard.tutum.co/stack/deploy/)
+
 ## Environment Variables
 
 ### PostgreSQL

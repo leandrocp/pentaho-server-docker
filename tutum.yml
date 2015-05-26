@@ -1,0 +1,45 @@
+pgdata:
+  image: postgres:9.3
+  tags:
+    - pentaho
+    - postgres
+  volumes:
+    - /var/lib/postgres/data
+  command: "true"
+
+postgres:
+  image: postgres:9.3
+  tags:
+    - pentaho
+    - postgres
+  volumes_from:
+    - pgdata
+  autorestart: always
+  environment:
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: password
+
+pentahodata:
+  tags:
+    - pentaho
+    - pentaho-bi
+  image: java:7
+  volumes:
+    - /pentaho-data
+  command: "true"
+
+pentaho:
+  image: leandrocp/pentaho-server
+  tags:
+    - pentaho
+    - pentaho-bi
+  volumes_from:
+    - pentahodata
+  links:
+    - "postgres:database"
+  ports:
+    - "80:8080"
+  autorestart: always
+  environment:
+    DB_USER: postgres
+    DB_PASS: password
