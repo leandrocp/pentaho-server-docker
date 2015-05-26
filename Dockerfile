@@ -14,13 +14,13 @@ ENV CATALINA_OPTS=""
 ENV PATH $PENTAHO_HOME/biserver-ce:$PATH
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV TIMEZONE "America/Sao_Paulo"
-ENV LOCALE en_US.UTF-8
-ENV LANG en_US.UTF-8
-
 RUN apt-get update && \
     apt-get install -y wget locales zip unzip netcat postgresql-client && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
+
+ENV TIMEZONE "America/Sao_Paulo"
+ENV LOCALE "en_US.UTF-8 UTF-8"
+ENV LANG "en_US.utf8"
 
 RUN echo $TIMEZONE > /etc/timezone && \
     echo $LOCALE >> /etc/locale.gen && \
