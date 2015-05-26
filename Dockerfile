@@ -15,20 +15,18 @@ ENV PATH $PENTAHO_HOME/biserver-ce:$PATH
 ENV DEBIAN_FRONTEND noninteractive
 
 ENV TIMEZONE "America/Sao_Paulo"
-ENV LOCALE "pt_BR"
+ENV LOCALE pt_BR.UTF-8
+ENV LANG pt_BR.UTF-8
 
 RUN apt-get update && \
     apt-get install -y wget locales zip unzip vim netcat postgresql-client && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN echo  > /etc/timezone && \
-    echo "${LOCALE}.UTF-8 UTF-8" >> /etc/locale.gen && \
+RUN echo $TIMEZONE > /etc/timezone && \
+    echo $LOCALE >> /etc/locale.gen && \
     locale-gen && \
     dpkg-reconfigure locales && \
     dpkg-reconfigure -f noninteractive tzdata
-
-ENV LANGUAGE $LOCALE.UTF-8
-ENV LANG $LOCALE.UTF-8
 
 RUN /usr/bin/wget -nv  http://softlayer-dal.dl.sourceforge.net/project/pentaho/Business%20Intelligence%20Server/${BISERVER_VERSION}/biserver-ce-${BISERVER_TAG}.zip -O /tmp/biserver-ce-${BISERVER_TAG}.zip 
 
