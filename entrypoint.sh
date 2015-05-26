@@ -3,6 +3,8 @@ set -e
 
 DB_USER=${DB_USER:-postgres}
 DB_PASS=${DB_PASS:-password}
+DB_HOST=database
+DB_PORT=${DB_PORT:-5432}
 
 function persist_dirs() {
   echo "-----> persist dirs"
@@ -36,15 +38,23 @@ function setup_database() {
   echo "-----> setup database"
   wait_database
 
+  sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/repository.xml && \
+  sed -i "s/\*\*password\*\*/${DB_PASS}/g" $PENTAHO_HOME/conf/repository.xml && \
   cp -fv $PENTAHO_HOME/conf/repository.xml \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/jackrabbit/repository.xml
 
+  sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/context.xml && \
+  sed -i "s/\*\*password\*\*/${DB_PASS}/g" $PENTAHO_HOME/conf/context.xml && \
   cp -fv $PENTAHO_HOME/conf/context.xml \
     $PENTAHO_HOME/biserver-ce/tomcat/webapps/pentaho/META-INF/context.xml
 
+  sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/applicationContext-spring-security-hibernate.properties && \
+  sed -i "s/\*\*password\*\*/${DB_PASS}/g" $PENTAHO_HOME/conf/applicationContext-spring-security-hibernate.properties && \
   cp -fv $PENTAHO_HOME/conf/applicationContext-spring-security-hibernate.properties \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/applicationContext-spring-security-hibernate.properties
 
+  sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/jdbc.properties && \
+  sed -i "s/\*\*password\*\*/${DB_PASS}/g" $PENTAHO_HOME/conf/jdbc.properties && \
   cp -fv $PENTAHO_HOME/conf/jdbc.properties \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/simple-jndi/jdbc.properties
 

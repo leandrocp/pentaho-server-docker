@@ -58,6 +58,7 @@ See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.c
 
 * `DB_USER` - default: "postgres"
 * `DB_PASS` - default: "password"
+* `DB_PORT` - default: 5432
 * `TIMEZONE` - default: "America/Sao_Paulo"
 * `LOCALE` - default: "en_US.UTF-8 UTF-8"
 * `LANG` - default: en_US.UTF-8
@@ -74,15 +75,13 @@ links:
 * The server takes a little to load, wait for the message:
 ```
 Pentaho BI Platform server is ready.
-.
-.
-.
+...
 Server startup in 173920 ms
 ```
 
-## TODO
+## See Also
 
-* Improve database user/password params on conf files
+* [https://github.com/wmarinho/docker-pentaho](https://github.com/wmarinho/docker-pentaho)
 
 ## License
 
