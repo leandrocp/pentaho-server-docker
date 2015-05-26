@@ -31,6 +31,13 @@ docker run --name pentaho \
 -d leandrocp/pentaho-server
 ```
 
+### Open Admin
+
+Open `http://localhost:8080/` and fill credentials:
+
+User Name: admin
+Password: password
+
 ## Environment Variables
 
 ### PostgreSQL
@@ -40,18 +47,28 @@ You have to set the following variables:
 * `POSTGRES_USER`
 * `POSTGRES_PASSWORD`
 
-See: https://registry.hub.docker.com/_/postgres/
+See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.com/_/postgres/)
 
 ### Pentaho
 
 * `DB_USER` - default: "postgres"
 * `DB_PASS` - default: "password"
 * `TIMEZONE` - default: "America/Sao_Paulo"
-* `LANG` - default: "pt_BR.UTF-8"
+* `LOCALE` - default: en_US.UTF-8
+* `LANG` - default: en_US.UTF-8
 
-## Note
+## Notes
 
-This image doen´t work without PostgreSQL and has no sample data loaded.
+* This image doen´t work without PostgreSQL and has no sample data loaded.
+
+* The server takes a little to load, wait for the message:
+```
+Pentaho BI Platform server is ready.
+.
+.
+.
+Server startup in 173920 ms
+```
 
 ## TODO
 
