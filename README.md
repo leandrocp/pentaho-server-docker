@@ -2,9 +2,11 @@
 
 Easy-to-Use business intelligence (BI) for all
 
+![logo](http://community.pentaho.com/img/logo-pentaho.svg)
+
 > [http://community.pentaho.com/](http://community.pentaho.com/)
 
-![logo](http://community.pentaho.com/img/logo-pentaho.svg)
+> Version: 5.3
 
 ## How to use this image
 
@@ -28,11 +30,32 @@ docker run --name pentaho \
 -e DB_PASS=password \
 -d leandrocp/pentaho-server
 ```
+
+## Environment Variables
+
+### PostgreSQL
+
+You have to set the following variables:
+
+* `POSTGRES_USER`
+* `POSTGRES_PASSWORD`
+
+See: https://registry.hub.docker.com/_/postgres/
+
+### Pentaho
+
+* `DB_USER` - default: "postgres"
+* `DB_PASS` - default: "password"
+* `TIMEZONE` - default: "America/Sao_Paulo"
+* `LANG` - default: "pt_BR.UTF-8"
+
+## Note
+
+This image doen´t work without PostgreSQL and has no sample data loaded.
+
 ## TODO
 
-* Param ENV TIMEZONE 
-* Param ENV LOCALE
-* Param database user & password on conf files
+* Improve database user/password params on conf files
 
 ## License
 
