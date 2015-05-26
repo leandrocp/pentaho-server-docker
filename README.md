@@ -25,7 +25,6 @@ docker run --name postgres \
 docker run --name pentaho \
 --link postgres:database \
 -e TIMEZONE="America/Sao_Paulo" \
--e LOCALE="pt_BR" \
 -e DB_USER=postgres \
 -e DB_PASS=password \
 -d leandrocp/pentaho-server
