@@ -60,7 +60,12 @@ See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.c
 ## Notes
 
 * This image doen´t work without PostgreSQL and has no sample data loaded.
-
+* PostgreSQL alias link should be named `database`:
+```
+links:
+  - postgres:database # image:alias
+```
+* It's recommended at least *2GB* memory
 * The server takes a little to load, wait for the message:
 ```
 Pentaho BI Platform server is ready.
