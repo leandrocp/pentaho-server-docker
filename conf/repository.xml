@@ -76,7 +76,7 @@
     <param name="driver" value="org.postgresql.Driver"/>
     <param name="url" value="jdbc:postgresql://database:5432/jackrabbit"/>
     <param name="user" value="jcr_user"/>
-    <param name="password" value="password"/>
+    <param name="password" value="**password**"/>
     <param name="schema" value="postgresql"/>
     <param name="schemaObjectPrefix" value="fs_repos_"/>
   </FileSystem>
@@ -141,7 +141,7 @@
     <param name="url" value="jdbc:postgresql://database:5432/jackrabbit"/>
     <param name="driver" value="org.postgresql.Driver"/>
     <param name="user" value="jcr_user"/>
-    <param name="password" value="password"/>
+    <param name="password" value="**password**"/>
     <param name="databaseType" value="postgresql"/>
     <param name="minRecordLength" value="1024"/>
     <param name="maxConnections" value="3"/>
@@ -252,7 +252,7 @@
       <param name="driver" value="org.postgresql.Driver"/>
       <param name="url" value="jdbc:postgresql://database:5432/jackrabbit"/>
       <param name="user" value="jcr_user"/>
-      <param name="password" value="password"/>
+      <param name="password" value="**password**"/>
       <param name="schema" value="postgresql"/>
       <param name="schemaObjectPrefix" value="fs_ws_"/>
     </FileSystem>
@@ -310,7 +310,7 @@
       <param name="url" value="jdbc:postgresql://database:5432/jackrabbit"/>
       <param name="driver" value="org.postgresql.Driver"/>
       <param name="user" value="jcr_user"/>
-      <param name="password" value="password"/>
+      <param name="password" value="**password**"/>
       <param name="schema" value="postgresql"/>
       <param name="schemaObjectPrefix" value="${wsp.name}_pm_ws_"/>
     </PersistenceManager>
@@ -401,7 +401,7 @@ value="{0}/etc;org.pentaho.security.publish;jcr:read,jcr:readAccessControl,jcr:w
       <param name="driver" value="org.postgresql.Driver"/>
       <param name="url" value="jdbc:postgresql://database:5432/jackrabbit"/>
       <param name="user" value="jcr_user"/>
-      <param name="password" value="password"/>
+      <param name="password" value="**password**"/>
       <param name="schema" value="postgresql"/>
       <param name="schemaObjectPrefix" value="fs_ver_"/>
     </FileSystem>
@@ -460,7 +460,7 @@ value="{0}/etc;org.pentaho.security.publish;jcr:read,jcr:readAccessControl,jcr:w
       <param name="url" value="jdbc:postgresql://database:5432/jackrabbit"/>
       <param name="driver" value="org.postgresql.Driver"/>
       <param name="user" value="jcr_user"/>
-      <param name="password" value="password"/>
+      <param name="password" value="**password**"/>
       <param name="schema" value="postgresql"/>
       <param name="schemaObjectPrefix" value="pm_ver_"/>
     </PersistenceManager>
