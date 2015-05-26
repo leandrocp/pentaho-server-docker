@@ -33,10 +33,10 @@ docker run --name pentaho \
 
 ### Open Admin
 
-Open `http://localhost:8080/` and fill credentials:
+Open [http://dockerhost:8080/](http://dockerhost:8080/) and fill credentials:
 
-User Name: admin
-Password: password
+* User Name: admin
+* Password: password
 
 ## Environment Variables
 
