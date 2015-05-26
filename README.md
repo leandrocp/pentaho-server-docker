@@ -47,9 +47,8 @@ See [tutum.yml](https://github.com/leandrocp/pentaho-server-docker/blob/master/t
 
 ### PostgreSQL
 
-You have to set the following variables:
+You have to set the following variable:
 
-* `POSTGRES_USER`
 * `POSTGRES_PASSWORD`
 
 See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.com/_/postgres/)
@@ -85,4 +84,4 @@ Server startup in 173920 ms
 
 ## License
 
-[MIT Licensed](https://github.com/leandrocp/pentaho-server-docker/blob/master/LICENSE.md).
+[MIT Licensed](https://github.com/leandrocp/pentaho-server-docker/blob/master/LICENSE.md)
