@@ -68,7 +68,7 @@ See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.c
 * PostgreSQL alias link should be named `pentaho-database`:
 ```
 links:
-  - postgres:pentaho-database # image:alias
+  - postgres:pentaho-database # container:host
 ```
 * It's recommended at least *2GB* memory
 * The server takes a little to load, wait for the message:
