@@ -23,7 +23,7 @@ docker run --name postgres \
 
 ``` 
 docker run --name pentaho \
---link postgres:database \
+--link postgres:pentaho-database \
 -e TIMEZONE="America/Sao_Paulo" \
 -e DB_USER=postgres \
 -e DB_PASS=password \
@@ -65,10 +65,10 @@ See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.c
 ## Notes
 
 * This image doen´t work without PostgreSQL and has no sample data loaded.
-* PostgreSQL alias link should be named `database`:
+* PostgreSQL alias link should be named `pentaho-database`:
 ```
 links:
-  - postgres:database # image:alias
+  - postgres:pentaho-database # image:alias
 ```
 * It's recommended at least *2GB* memory
 * The server takes a little to load, wait for the message:

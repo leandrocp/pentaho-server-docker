@@ -36,7 +36,7 @@ pentaho:
   volumes_from:
     - pentahodata
   links:
-    - "postgres:database"
+    - "postgres:pentaho-database"
   ports:
     - "80:8080"
   autorestart: always

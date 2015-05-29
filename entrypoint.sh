@@ -3,7 +3,7 @@ set -e
 
 DB_USER=${DB_USER:-postgres}
 DB_PASS=${DB_PASS:-password}
-DB_HOST=database
+DB_HOST=pentaho-database
 DB_PORT=${DB_PORT:-5432}
 
 function persist_dirs() {
@@ -20,12 +20,14 @@ function persist_dirs() {
   fi
 }
 
+# TODO: Fix to work on Google Container Engine
 function wait_database() {
-  host="database"
-  port=$(env | grep DATABASE_PORT | grep TCP_PORT | cut -d = -f 2)
+  # TODO: Detect postgres port
+  #port=$(env | grep DATABASE_PORT | grep TCP_PORT | cut -d = -f 2)
+  port=5432
 
-  echo -n "-----> waiting for database on $host:$port ..."
-  while ! nc -w 1 $host $port 2>/dev/null
+  echo -n "-----> waiting for database on $DB_HOST:$port ..."
+  while ! nc -w 1 $DB_HOST $port 2>/dev/null
   do
     echo -n .
     sleep 1
@@ -64,23 +66,23 @@ function setup_database() {
   sed -i 's/hsql/postgresql/g' \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/hibernate/hibernate-settings.xml
 
-  sed -i 's/localhost/database/g' \
+  sed -i 's/localhost/pentaho-database/g' \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
 
   sed -i 's/system\/hibernate\/hsql.hibernate.cfg.xml/system\/hibernate\/postgresql.hibernate.cfg.xml/g' \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/hibernate/hibernate-settings.xml
 
   export PGPASSWORD=$DB_PASS
-  if ! psql -lqt -U $DB_USER -h database | grep -w hibernate; then
+  if ! psql -lqt -U $DB_USER -h pentaho-database | grep -w hibernate; then
     echo "-----> importing sql files"
 
-    psql -U $DB_USER -h database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_jcr_postgresql.sql
-    psql -U $DB_USER -h database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_quartz_postgresql.sql
-    psql -U $DB_USER -h database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_repository_postgresql.sql
+    psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_jcr_postgresql.sql
+    psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_quartz_postgresql.sql
+    psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_repository_postgresql.sql
 
     # http://jira.pentaho.com/browse/BISERVER-10639
     # https://github.com/wmarinho/docker-pentaho/blob/5.3/config/postgresql/biserver-ce/data/postgresql/create_quartz_postgresql.sql#L37
-    psql -U $DB_USER -h database quartz -c 'CREATE TABLE "QRTZ" ( NAME VARCHAR(200) NOT NULL, PRIMARY KEY (NAME) );'
+    psql -U $DB_USER -h pentaho-database quartz -c 'CREATE TABLE "QRTZ" ( NAME VARCHAR(200) NOT NULL, PRIMARY KEY (NAME) );'
   fi
   unset PGPASSWORD
 
