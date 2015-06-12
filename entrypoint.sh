@@ -79,6 +79,10 @@ function setup_database() {
     psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_jcr_postgresql.sql
     psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_quartz_postgresql.sql
     psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_repository_postgresql.sql
+    
+    psql -U $DB_USER -h pentaho-database -c "ALTER USER pentaho_user WITH PASSWORD '${DB_PASS}'"
+    psql -U $DB_USER -h pentaho-database -c "ALTER USER jcr_user WITH PASSWORD '${DB_PASS}'"
+    psql -U $DB_USER -h pentaho-database -c "ALTER USER hibuser WITH PASSWORD '${DB_PASS}'"
 
     # http://jira.pentaho.com/browse/BISERVER-10639
     # https://github.com/wmarinho/docker-pentaho/blob/5.3/config/postgresql/biserver-ce/data/postgresql/create_quartz_postgresql.sql#L37
