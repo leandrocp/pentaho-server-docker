@@ -28,7 +28,7 @@ RUN echo $TIMEZONE > /etc/timezone && \
     dpkg-reconfigure locales && \
     dpkg-reconfigure -f noninteractive tzdata
 
-RUN /usr/bin/curl -SL "http://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/${BISERVER_VERSION}/biserver-ce-${BISERVER_TAG}.zip/download" -o /tmp/biserver-ce-${BISERVER_TAG}.zip --retry 3 -C
+RUN /usr/bin/curl -SL "http://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/${BISERVER_VERSION}/biserver-ce-${BISERVER_TAG}.zip/download" -o /tmp/biserver-ce-${BISERVER_TAG}.zip --retry 3 -C -
 
 RUN /usr/bin/unzip -q /tmp/biserver-ce-${BISERVER_TAG}.zip -d $PENTAHO_HOME && \
     rm -f /tmp/biserver-ce-${BISERVER_TAG}.zip && \
