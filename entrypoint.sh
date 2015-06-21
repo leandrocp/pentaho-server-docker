@@ -5,6 +5,7 @@ DB_USER=${DB_USER:-postgres}
 DB_PASS=${DB_PASS:-password}
 DB_HOST=pentaho-database
 DB_PORT=${DB_PORT:-5432}
+INSTALL_PLUGINS=${INSTALL_PLUGINS:-true}
 
 function persist_dirs() {
   echo "-----> persist dirs"
@@ -112,7 +113,7 @@ function setup_tomcat() {
 function setup_plugins() {
   echo "-----> setup plugins"
 
-  if [ ! -f /pentaho-data/.plugins.ok ]; then
+  if [ "$INSTALL_PLUGINS" = true ] && [ ! -f /pentaho-data/.plugins.ok ]; then
     echo "-----> install ctools"
 
     wget --no-check-certificate 'https://raw.github.com/pmalves/ctools-installer/master/ctools-installer.sh' -P / -o /dev/null
