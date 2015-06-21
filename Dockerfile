@@ -15,7 +15,7 @@ ENV PATH $PENTAHO_HOME/biserver-ce:$PATH
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
-    apt-get install -y wget locales zip unzip netcat postgresql-client && \
+    apt-get install -y curl locales zip unzip netcat postgresql-client && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV TIMEZONE "America/Sao_Paulo"
@@ -28,7 +28,7 @@ RUN echo $TIMEZONE > /etc/timezone && \
     dpkg-reconfigure locales && \
     dpkg-reconfigure -f noninteractive tzdata
 
-RUN /usr/bin/wget -nv  http://softlayer-dal.dl.sourceforge.net/project/pentaho/Business%20Intelligence%20Server/${BISERVER_VERSION}/biserver-ce-${BISERVER_TAG}.zip -O /tmp/biserver-ce-${BISERVER_TAG}.zip 
+RUN /usr/bin/curl -SL "http://sourceforge.net/projects/pentaho/files/Business%20Intelligence%20Server/${BISERVER_VERSION}/biserver-ce-${BISERVER_TAG}.zip/download" -o /tmp/biserver-ce-${BISERVER_TAG}.zip --retry 3 -C
 
 RUN /usr/bin/unzip -q /tmp/biserver-ce-${BISERVER_TAG}.zip -d $PENTAHO_HOME && \
     rm -f /tmp/biserver-ce-${BISERVER_TAG}.zip && \
