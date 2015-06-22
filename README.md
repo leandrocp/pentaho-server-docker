@@ -13,7 +13,7 @@ Easy-to-Use business intelligence (BI) for all
 ### Start a PostgreSQL instance
 
 ``` 
-docker run --name postgres \
+docker run --name some-postgres \
 -e POSTGRES_USER=postgres \
 -e POSTGRES_PASSWORD=password \
 -d postgres
@@ -23,7 +23,7 @@ docker run --name postgres \
 
 ``` 
 docker run --name pentaho \
---link postgres:pentaho-database \
+--link some-postgres:postgres \
 -e TIMEZONE="America/Sao_Paulo" \
 -e DB_USER=postgres \
 -e DB_PASS=password \
@@ -55,9 +55,11 @@ See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.c
 
 ### Pentaho
 
+* `DB_HOST` - default: linked `postgres` container
 * `DB_USER` - default: "postgres"
 * `DB_PASS` - default: "password"
 * `DB_PORT` - default: 5432
+* `DB_SERVICE_NAME` - default: empty. See TODO
 * `TIMEZONE` - default: "America/Sao_Paulo"
 * `LOCALE` - default: "en_US.UTF-8 UTF-8"
 * `LANG` - default: en_US.UTF-8
@@ -66,11 +68,6 @@ See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.c
 ## Notes
 
 * This image doen´t work without PostgreSQL and has no sample data loaded.
-* PostgreSQL alias link should be named `pentaho-database`:
-```
-links:
-  - postgres:pentaho-database # container:host
-```
 * It's recommended at least *2GB* memory
 * The server takes a little to load, wait for the message:
 ```

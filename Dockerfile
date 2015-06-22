@@ -15,7 +15,7 @@ ENV PATH $PENTAHO_HOME/biserver-ce:$PATH
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
-    apt-get install -y curl locales zip unzip netcat postgresql-client && \
+    apt-get install -y curl locales zip unzip netcat dnsutils postgresql-client && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENV TIMEZONE "America/Sao_Paulo"
