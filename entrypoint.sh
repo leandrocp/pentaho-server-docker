@@ -5,7 +5,7 @@ DB_USER=${DB_USER:-postgres}
 DB_PASS=${DB_PASS:-password}
 DB_HOST=${DB_HOST:-postgres}
 DB_PORT=${DB_PORT:-5432}
-INSTALL_PLUGINS=${INSTALL_PLUGINS:-true}
+INSTALL_PLUGINS=${INSTALL_PLUGINS:-false}
 
 function persist_dirs() {
   echo "-----> persist dirs"
@@ -23,17 +23,10 @@ function persist_dirs() {
 
 # TODO Finish this function
 function service_discovery_db_host() {
-  echo "-----> locating db host service at ${DB_SERVICE_NAME}"
-
   if [ ! -z $DB_SERVICE_NAME ]; then
-    DB_HOST=$(dig +short $DB_SERVICE_NAME | head -n 1)
+    echo "-----> locating db host service at ${DB_SERVICE_NAME}"
+    DB_HOST=$(host $DB_SERVICE_NAME | awk '/address/ {print $NF}' | head -n 1)
   fi
- 
-  if [ -z $DB_HOST ]; then
-    DB_HOST=postgres
-  fi
-
-  echo "-----> DB_HOST: ${DB_HOST}"
 }
 
 # TODO: Fix to work on Google Container Engine
@@ -54,6 +47,11 @@ function wait_database() {
 
 function setup_database() {
   echo "-----> setup database"
+  echo "DB_USER: ${DB_USER}"
+  echo "DB_PASS: ${DB_PASS}"
+  echo "DB_HOST: ${DB_HOST}"
+  echo "DB_PORT: ${DB_PORT}"
+
   wait_database
 
   sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/repository.xml && \
@@ -130,9 +128,8 @@ function setup_tomcat() {
 }
 
 function setup_plugins() {
-  echo "-----> setup plugins"
-
   if [ "$INSTALL_PLUGINS" = true ] && [ ! -f /pentaho-data/.plugins.ok ]; then
+    echo "-----> setup plugins"
     echo "-----> install ctools"
 
     wget --no-check-certificate 'https://raw.github.com/pmalves/ctools-installer/master/ctools-installer.sh' -P / -o /dev/null

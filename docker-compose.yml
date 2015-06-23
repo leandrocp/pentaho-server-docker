@@ -1,7 +1,7 @@
 pgdata:
   image: postgres:9.3
   volumes:
-    - /var/lib/postgres/data
+    - /var/lib/postgresql/data
   command: true
 
 postgres:

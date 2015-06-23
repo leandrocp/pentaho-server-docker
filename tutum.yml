@@ -4,7 +4,7 @@ pgdata:
     - pentaho
     - postgres
   volumes:
-    - /var/lib/postgres/data
+    - /var/lib/postgresql/data
   command: "true"
 
 postgres:
