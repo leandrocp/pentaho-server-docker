@@ -23,6 +23,8 @@ function persist_dirs() {
 
 # TODO Finish this function
 function service_discovery_db_host() {
+  echo "-----> locating db host service at ${DB_SERVICE_NAME}"
+
   if [ ! -z $DB_SERVICE_NAME ]; then
     DB_HOST=$(dig +short $DB_SERVICE_NAME | head -n 1)
   fi
@@ -30,6 +32,8 @@ function service_discovery_db_host() {
   if [ -z $DB_HOST ]; then
     DB_HOST=postgres
   fi
+
+  echo "-----> DB_HOST: ${DB_HOST}"
 }
 
 # TODO: Fix to work on Google Container Engine
