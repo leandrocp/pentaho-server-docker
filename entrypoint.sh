@@ -24,11 +24,11 @@ function persist_dirs() {
 # TODO Finish this function
 function service_discovery_db_host() {
   if [ ! -z $DB_SERVICE_NAME ]; then
-    $DB_HOST=$(dig +short $DB_SERVICE_NAME | head -n 1)
+    DB_HOST=$(dig +short $DB_SERVICE_NAME | head -n 1)
   fi
  
   if [ -z $DB_HOST ]; then
-    $DB_HOST=postgres
+    DB_HOST=postgres
   fi
 }
 
