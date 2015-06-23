@@ -3,7 +3,7 @@ set -e
 
 DB_USER=${DB_USER:-postgres}
 DB_PASS=${DB_PASS:-password}
-DB_HOST=pentaho-database
+DB_HOST=${DB_HOST:-postgres}
 DB_PORT=${DB_PORT:-5432}
 INSTALL_PLUGINS=${INSTALL_PLUGINS:-true}
 
@@ -19,6 +19,21 @@ function persist_dirs() {
     mv $PENTAHO_HOME/biserver-ce/tomcat /pentaho-data/tomcat
     ln -s /pentaho-data/tomcat $PENTAHO_HOME/biserver-ce/tomcat 
   fi
+}
+
+# TODO Finish this function
+function service_discovery_db_host() {
+  echo "-----> locating db host service at ${DB_SERVICE_NAME}"
+
+  if [ ! -z $DB_SERVICE_NAME ]; then
+    DB_HOST=$(dig +short $DB_SERVICE_NAME | head -n 1)
+  fi
+ 
+  if [ -z $DB_HOST ]; then
+    DB_HOST=postgres
+  fi
+
+  echo "-----> DB_HOST: ${DB_HOST}"
 }
 
 # TODO: Fix to work on Google Container Engine
@@ -42,21 +57,25 @@ function setup_database() {
   wait_database
 
   sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/repository.xml && \
+  sed -i "s/\*\*host\*\*/${DB_HOST}/g" $PENTAHO_HOME/conf/repository.xml && \
   sed -i "s/\*\*password\*\*/${DB_PASS}/g" $PENTAHO_HOME/conf/repository.xml && \
   cp -fv $PENTAHO_HOME/conf/repository.xml \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/jackrabbit/repository.xml
 
   sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/context.xml && \
+  sed -i "s/\*\*host\*\*/${DB_HOST}/g" $PENTAHO_HOME/conf/context.xml && \
   sed -i "s/\*\*password\*\*/${DB_PASS}/g" $PENTAHO_HOME/conf/context.xml && \
   cp -fv $PENTAHO_HOME/conf/context.xml \
     $PENTAHO_HOME/biserver-ce/tomcat/webapps/pentaho/META-INF/context.xml
 
   sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/applicationContext-spring-security-hibernate.properties && \
+  sed -i "s/\*\*host\*\*/${DB_HOST}/g" $PENTAHO_HOME/conf/applicationContext-spring-security-hibernate.properties && \
   sed -i "s/\*\*password\*\*/${DB_PASS}/g" $PENTAHO_HOME/conf/applicationContext-spring-security-hibernate.properties && \
   cp -fv $PENTAHO_HOME/conf/applicationContext-spring-security-hibernate.properties \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/applicationContext-spring-security-hibernate.properties
 
   sed -i "s/5432/${DB_PORT}/g" $PENTAHO_HOME/conf/jdbc.properties && \
+  sed -i "s/\*\*host\*\*/${DB_HOST}/g" $PENTAHO_HOME/conf/jdbc.properties && \
   sed -i "s/\*\*password\*\*/${DB_PASS}/g" $PENTAHO_HOME/conf/jdbc.properties && \
   cp -fv $PENTAHO_HOME/conf/jdbc.properties \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/simple-jndi/jdbc.properties
@@ -67,27 +86,27 @@ function setup_database() {
   sed -i 's/hsql/postgresql/g' \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/hibernate/hibernate-settings.xml
 
-  sed -i 's/localhost/pentaho-database/g' \
+  sed -i "s/localhost/i${DB_HOST}/g" \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
 
   sed -i 's/system\/hibernate\/hsql.hibernate.cfg.xml/system\/hibernate\/postgresql.hibernate.cfg.xml/g' \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/hibernate/hibernate-settings.xml
 
   export PGPASSWORD=$DB_PASS
-  if ! psql -lqt -U $DB_USER -h pentaho-database | grep -w hibernate; then
+  if ! psql -lqt -U $DB_USER -h $DB_HOST | grep -w hibernate; then
     echo "-----> importing sql files"
 
-    psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_jcr_postgresql.sql
-    psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_quartz_postgresql.sql
-    psql -U $DB_USER -h pentaho-database -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_repository_postgresql.sql
+    psql -U $DB_USER -h $DB_HOST -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_jcr_postgresql.sql
+    psql -U $DB_USER -h $DB_HOST -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_quartz_postgresql.sql
+    psql -U $DB_USER -h $DB_HOST -f $PENTAHO_HOME/biserver-ce/data/postgresql/create_repository_postgresql.sql
     
-    psql -U $DB_USER -h pentaho-database -c "ALTER USER pentaho_user WITH PASSWORD '${DB_PASS}'"
-    psql -U $DB_USER -h pentaho-database -c "ALTER USER jcr_user WITH PASSWORD '${DB_PASS}'"
-    psql -U $DB_USER -h pentaho-database -c "ALTER USER hibuser WITH PASSWORD '${DB_PASS}'"
+    psql -U $DB_USER -h $DB_HOST -c "ALTER USER pentaho_user WITH PASSWORD '${DB_PASS}'"
+    psql -U $DB_USER -h $DB_HOST -c "ALTER USER jcr_user WITH PASSWORD '${DB_PASS}'"
+    psql -U $DB_USER -h $DB_HOST -c "ALTER USER hibuser WITH PASSWORD '${DB_PASS}'"
 
     # http://jira.pentaho.com/browse/BISERVER-10639
     # https://github.com/wmarinho/docker-pentaho/blob/5.3/config/postgresql/biserver-ce/data/postgresql/create_quartz_postgresql.sql#L37
-    psql -U $DB_USER -h pentaho-database quartz -c 'CREATE TABLE "QRTZ" ( NAME VARCHAR(200) NOT NULL, PRIMARY KEY (NAME) );'
+    psql -U $DB_USER -h $DB_HOST quartz -c 'CREATE TABLE "QRTZ" ( NAME VARCHAR(200) NOT NULL, PRIMARY KEY (NAME) );'
   fi
   unset PGPASSWORD
 
@@ -134,6 +153,7 @@ function setup_plugins() {
 if [ "$1" = 'run' ]; then
   persist_dirs
   setup_tomcat
+  service_discovery_db_host
   setup_database
   setup_plugins
 

@@ -2,7 +2,7 @@
 <Context path="/pentaho" docbase="webapps/pentaho/">
   <Resource
     validationQuery="select 1"
-    url="jdbc:postgresql://pentaho-database:5432/hibernate"
+    url="jdbc:postgresql://**host**:5432/hibernate"
     driverClassName="org.postgresql.Driver"
     password="**password**"
     username="hibuser"
@@ -15,7 +15,7 @@
     name="jdbc/Hibernate"/>
 
   <Resource validationQuery="select 1"
-    url="jdbc:postgresql://pentaho-database:5432/hibernate"
+    url="jdbc:postgresql://**host**:5432/hibernate"
     driverClassName="org.postgresql.Driver"
     password="**password**"
     username="hibuser"
@@ -28,7 +28,7 @@
     name="jdbc/Audit"/>
 
   <Resource validationQuery="select 1"
-    url="jdbc:postgresql://pentaho-database:5432/quartz"
+    url="jdbc:postgresql://**host**:5432/quartz"
     driverClassName="org.postgresql.Driver"
     password="**password**"
     username="pentaho_user"
@@ -41,7 +41,7 @@
     name="jdbc/Quartz"/>
 
   <Resource validationQuery="select 1"
-    url="jdbc:postgresql://pentaho-database:5432/hibernate"
+    url="jdbc:postgresql://**host**:5432/hibernate"
     driverClassName="org.postgresql.Driver"
     password="**password**"
     username="hibuser"
@@ -54,7 +54,7 @@
     name="jdbc/pentaho_operations_mart"/>
 
   <Resource validationQuery="select 1"
-    url="jdbc:postgresql://pentaho-database:5432/hibernate"
+    url="jdbc:postgresql://**host**:5432/hibernate"
     driverClassName="org.postgresql.Driver"
     password="**password**"
     username="hibuser"
