@@ -84,7 +84,7 @@ function setup_database() {
   sed -i 's/hsql/postgresql/g' \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/hibernate/hibernate-settings.xml
 
-  sed -i "s/localhost/i${DB_HOST}/g" \
+  sed -i "s/localhost/${DB_HOST}/g" \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/hibernate/postgresql.hibernate.cfg.xml
 
   sed -i 's/system\/hibernate\/hsql.hibernate.cfg.xml/system\/hibernate\/postgresql.hibernate.cfg.xml/g' \
