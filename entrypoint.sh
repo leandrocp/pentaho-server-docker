@@ -127,14 +127,6 @@ function setup_tomcat() {
   touch /pentaho-data/.tomcat.ok
 }
 
-function setup_pentaho() {
-  echo "-----> setup pentaho"
-
-  # http://stackoverflow.com/questions/25263054/pentaho-userid-and-password-arguments-in-direct-links-to-plugins
-  sed -i "s/basicProcessingFilter,requestParameterProcessingFilter/requestParameterProcessingFilter,basicProcessingFilter/g" \
-    $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/applicationContext-spring-security.xml
-}
-
 function setup_plugins() {
   if [ "$INSTALL_PLUGINS" = true ] && [ ! -f /pentaho-data/.plugins.ok ]; then
     echo "-----> setup plugins"
@@ -158,7 +150,6 @@ function setup_plugins() {
 if [ "$1" = 'run' ]; then
   persist_dirs
   setup_tomcat
-  setup_pentaho
   service_discovery_db_host
   setup_database
   setup_plugins
