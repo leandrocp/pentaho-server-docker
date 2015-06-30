@@ -127,6 +127,16 @@ function setup_tomcat() {
   touch /pentaho-data/.tomcat.ok
 }
 
+function setup_pentaho() {
+  echo "-----> setup pentaho"
+
+  # https://help.pentaho.com/Documentation/5.3/0P0/000/090
+  if [ "$ENABLE_AUTH_URL" = true ]; then
+    sed -i "s/requestParameterAuthenticationEnabled=false/requestParameterAuthenticationEnabled=true/g" \
+      $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/security.properties
+  fi
+}
+
 function setup_plugins() {
   if [ "$INSTALL_PLUGINS" = true ] && [ ! -f /pentaho-data/.plugins.ok ]; then
     echo "-----> setup plugins"
@@ -150,6 +160,7 @@ function setup_plugins() {
 if [ "$1" = 'run' ]; then
   persist_dirs
   setup_tomcat
+  setup_pentaho
   service_discovery_db_host
   setup_database
   setup_plugins
