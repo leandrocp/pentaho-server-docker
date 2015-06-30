@@ -131,10 +131,8 @@ function setup_pentaho() {
   echo "-----> setup pentaho"
 
   # https://help.pentaho.com/Documentation/5.3/0P0/000/090
-  if [ "$ENABLE_AUTH_URL" = true ]; then
-    sed -i "s/requestParameterAuthenticationEnabled=false/requestParameterAuthenticationEnabled=true/g" \
-      $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/security.properties
-  fi
+  cp -fv $PENTAHO_HOME/conf/security.properties \
+    $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/security.properties
 }
 
 function setup_plugins() {
