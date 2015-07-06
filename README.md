@@ -64,7 +64,6 @@ See: [https://registry.hub.docker.com/_/postgres/](https://registry.hub.docker.c
 * `LOCALE` - default: "en_US.UTF-8 UTF-8"
 * `LANG` - default: en_US.UTF-8
 * `INSTALL_PLUGINS` - default: false
-* `ENABLE_AUTH_URL` - default: true, see [doc](https://help.pentaho.com/Documentation/5.3/0P0/000/090)
 
 ## Notes
 

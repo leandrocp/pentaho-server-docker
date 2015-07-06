@@ -131,7 +131,7 @@ function setup_pentaho() {
   echo "-----> setup pentaho"
 
   # https://help.pentaho.com/Documentation/5.3/0P0/000/090
-  cp -fv $PENTAHO_HOME/conf/security.properties \
+  sed -i "s/\(requestParameterAuthenticationEnabled\)\(.*\)/\1=true/g" \
     $PENTAHO_HOME/biserver-ce/pentaho-solutions/system/security.properties
 }
 
